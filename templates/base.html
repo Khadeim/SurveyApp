@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SurveyApp</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% block style %}
+    {% endblock style %}
+</head>
+<body>
+    <div class="mb-4" style="    border-bottom: 2px solid #d4d6d7 !important;">
+        <nav class="navbar navbar-light  container ">
+          <span class="d-flex">
+              <h6 class="mb-0 text-dark">e-Survey Tool</h6>
+          </span>
+          {% if request.user.is_authenticated %}
+          <h6 class="mb-0 text-dark">{{request.user.username}}</h6>
+          <div class="d-flex">
+            {% if  request.user.is_superuser %}
+            <a href="/admin"  class="text-decoration-none text-dark mr-4"><h6 class="mb-0 mx-0">Admin</h6></a>
+  
+            {% endif %}
+            <a href="{% url 'logout' %}"  class="text-decoration-none text-dark"><h6 class="mb-0 mx-0">Logout</h6></a>
+            
+          </div>
+
+          {% endif %}
+    
+    
+        </nav>
+      </div>
+    {% block content %}
+    {% endblock content %}
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    {% block extrascript %}
+    {% endblock extrascript %}
+</body>
+</html>
