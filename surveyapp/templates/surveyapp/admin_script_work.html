@@ -1,0 +1,70 @@
+<script>
+    $(document).ready(function(e){
+        $("#add-question-div").hide()
+        $("#edit-question-div").hide()
+    })
+    function Delete(id){
+        $("#question-id").val(id)
+        $("#delete-question-form").submit()
+    }
+
+    $(".edit-question").on("click", function(e){
+        $("#edit-question-div").show()
+        $("#add-question-div").hide()
+        $(window).scrollTop(0)
+        $("#edit-question-id").val($(this).attr("data-id"))
+        $("#edit-question").val($(this).attr("data-q"))
+        $("#edit-option1").val($(this).attr("data-1"))
+        $("#edit-option2").val($(this).attr("data-2"))
+        $("#edit-option3").val($(this).attr("data-3"))
+    })
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    const ctx = document.querySelectorAll('#myChart');
+    
+    const option1 = document.querySelectorAll('#option1');
+    const option2 = document.querySelectorAll('#option2');
+    const option3 = document.querySelectorAll('#option3');
+
+    for(let i=0; i<ctx.length; i++){
+        var myChart = new Chart(ctx[i].getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: ["option1","option2","option3"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [option1[i+1].innerHTML, option2[i+1].innerHTML, option3[i+1].innerHTML],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+</script>

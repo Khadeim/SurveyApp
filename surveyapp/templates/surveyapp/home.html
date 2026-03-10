@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load option list_length question_answered %}
+{% block content %}
+
+{% if not request.user.is_superuser %}
+    {% include "surveyapp/user.html" %}
+
+{% else %}
+    {% include "surveyapp/admin.html" %}
+{% endif %}
+{% endblock content %}
+
+{% block extrascript %}
+
+<!-- Admin script -->
+{% if not request.user.is_superuser %}
+
+{% else %}
+{% include "surveyapp/admin_script_work.html" %}
+{% endif %}
+{% endblock extrascript %}

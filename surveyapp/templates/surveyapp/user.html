@@ -1,0 +1,44 @@
+{% load option list_length question_answered %}
+<div class="container">
+    <h1>{{request.user}}</h1>
+    <form action="{% url 'user-answer' %}" method="post" class="ml-4">
+        <input type="number" name="length" value="{{allQuestion|length}}" id="" hidden>
+        {% csrf_token %}
+    {% for question in allQuestion %}
+    <h4>
+        {{question.statement}}
+    </h4>
+    {% if not question.id|is_question_answered:request.user.id %}
+        <input type="number" name = "question-id_{{forloop.counter}}" value="{{question.id}}" hidden>
+        <div class="ml-4">
+            <div>
+                <input type="checkbox" name = "option1_{{forloop.counter}}"  id = "option1_{{forloop.counter}}" readonly>
+                <label for ="option1_{{forloop.counter}}">1. {{question|option:1}}</label>
+            </div>
+            <div>
+                <input type="checkbox" name = "option2_{{forloop.counter}}" id = "option2_{{forloop.counter}}">
+                <label for = "option2_{{forloop.counter}}">2. {{question|option:2}}</label>
+            </div>
+            <div>
+                <input type="checkbox" name = "option3_{{forloop.counter}}" id = "option3_{{forloop.counter}}">
+                <label for ="option3_{{forloop.counter}}">3. {{question|option:3}}</label>
+            </div>
+        </div>
+    {% else %}
+    <p class="ml-4"><strong>Your answer:</strong> {{question.id|answer:request.user.id}} </p>
+    <div class="ml-4">
+        <div>
+            <p for ="option1_{{forloop.counter}}">1. {{question|option:1}}</p>
+        </div>
+        <div>
+            <p for = "option2_{{forloop.counter}}">2. {{question|option:2}}</p>
+        </div>
+        <div>
+            <p for ="option3_{{forloop.counter}}">3. {{question|option:3}}</p>
+        </div>
+    </div>
+        {% endif %}
+    {% endfor %}
+    <button class="btn btn-outline-primary">Submit</button>
+</form>
+</div>

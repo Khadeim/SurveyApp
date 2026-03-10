@@ -1,0 +1,64 @@
+{% load option responses %}
+<div class="container">
+    <div class="container">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-outline-primary" onclick="$('#add-question-div').show();$('#edit-question-div').hide()">Add New Question</button>
+        </div>
+    </div>
+
+    <div class="container" id = "add-question-div">
+        <h3>Add New Question</h3>
+        <form action="{% url 'add-question' %}" method="POST" >
+            {% csrf_token %}
+            <input type="text" name="question" id="question" placeholder="Question" class="form-control mb-4">
+            <input type="text" name="option1" id="option1" placeholder="Option1" class="form-control mb-4">
+            <input type="text" name="option2" id="option2" placeholder="option2" class="form-control mb-4">
+            <input type="text" name="option3" id="option3" placeholder="option3" class="form-control mb-4">
+            <button class="btn btn-outline-primary">Submit</button>
+        
+        </form>
+        
+    </div>
+    <div class="container" id = "edit-question-div">
+        <h3>Edit Question</h3>
+        <form action="{% url 'edit-question' %}" method="POST" >
+            {% csrf_token %}
+            <input type="number" name="question-id" id="edit-question-id" placeholder="Question-id" class="form-control mb-4" hidden>
+    
+            <input type="text" name="question" id="edit-question" placeholder="Question" class="form-control mb-4">
+            <input type="text" name="option1" id="edit-option1" placeholder="Option1" class="form-control mb-4">
+            <input type="text" name="option2" id="edit-option2" placeholder="option2" class="form-control mb-4">
+            <input type="text" name="option3" id="edit-option3" placeholder="option3" class="form-control mb-4">
+            <button class="btn btn-outline-primary">Submit</button>
+        
+        </form>
+        
+    </div>
+    {% for question in allQuestion %}
+    <h4>
+        {{question.statement}}
+    </h4>
+    <button class="btn  btn-danger" onclick="Delete('{{question.id}}')">Delete</button>
+    <button class="btn  btn-outline-primary edit-question" data-id = "{{question.id}}" data-1="{{question|option:1}}"
+     data-2="{{question|option:2}}" data-3="{{question|option:3}}" data-q="{{question.statement}}">Edit</button>
+    
+     <h3>Options</h3>
+    <p>1. {{question|option:1}}</p>
+    <p>2. {{question|option:2}}</p>
+    <p>3. {{question|option:3}}</p>
+
+    <canvas id="myChart" style="max-width: 250px; max-height: 250px;"></canvas>
+
+    <h3>Statistics</h3>
+    <h6 class="d-flex">Total Responses: <p class="ml-4">{{question.id|total_answers}}</p> </h6>
+    <h6 class="d-flex">Option 1: <p class="ml-4" id="option1">{{question.id|total_answers_option:1}}</p> </h6>
+    <h6 class="d-flex">Option 1: <p class="ml-4" id="option2">{{question.id|total_answers_option:2}}</p> </h6>
+    <h6 class="d-flex">Option 1: <p class="ml-4" id="option3">{{question.id|total_answers_option:3}}</p> </h6>
+    {% endfor %}
+</div>
+
+<form action="{% url 'delete-question' %}" method="POST" id = "delete-question-form" hidden>
+    {% csrf_token %}
+    <input type="number" name="question-id" id="question-id">
+
+</form>
